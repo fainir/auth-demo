@@ -49,7 +49,7 @@ const login = (req, res) =>{
             const isPasswordCorrect = compareSync(body.password, currentUser.password);
             if(isPasswordCorrect){
                 currentUser.password = undefined;
-                const jsonToken = sign({result: currentUser},'qwe1234', {
+                const jsonToken = sign({result: currentUser},process.env.JWT_CODE, {
                    expiresIn: '1h', 
                 });
                 res.send(jsonToken);

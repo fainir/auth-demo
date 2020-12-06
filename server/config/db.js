@@ -1,9 +1,9 @@
 const {createPool} = require('mysql');
 const connection = createPool({
-    host:'localhost',
-    user:'root',
-    password:'nir123',
-    database:'demo',
+    host:process.env.host,
+    user:process.env.user,
+    password:process.env.password,
+    database:process.env.database,
     multipleStatements: true
 });
 

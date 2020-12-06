@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import { createCookie } from '../utils/Cookies';
 
-function Login() {
+function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -13,6 +13,7 @@ function Login() {
     })
     .then((result)=>{
       createCookie('token', result.data, 1);
+      props.onLogin();
     }).catch(err=>{
       console.log(err);
     })
