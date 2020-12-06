@@ -1,4 +1,4 @@
-const db = require('../../db.js');
+const db = require('../../config/db.js');
 const { hashSync, genSaltSync, compareSync} = require('bcrypt'); 
 const { sign } = require('jsonwebtoken');
 
@@ -13,7 +13,16 @@ const getUsers = (req, res) =>{
     })
 };
 
-const createUsers = (req, res) =>{
+const getMyProfile = (req, res) =>{
+        if(req.decoded){
+            res.send(req.decoded.result);
+        } else {
+            res.send('not authorised');
+        }
+};
+
+
+const createUser = (req, res) =>{
     const body = req.body;
     body.password = hashSync(body.password, genSaltSync(10));
     db.query('INSERT into users(email, password, userName) values (?,?,?)',
@@ -37,7 +46,7 @@ const login = (req, res) =>{
         if(err){
             res.send('user not found');
         } else if(currentUser){
-            const isPasswordCorrect = compareSync(body.password, currentUser.password )
+            const isPasswordCorrect = compareSync(body.password, currentUser.password);
             if(isPasswordCorrect){
                 currentUser.password = undefined;
                 const jsonToken = sign({result: currentUser},'qwe1234', {
@@ -56,6 +65,7 @@ const login = (req, res) =>{
 
 module.exports = {
     getUsers,
-    createUsers,
+    createUser,
+    getMyProfile,
     login
 };

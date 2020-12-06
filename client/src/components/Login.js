@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
+import { createCookie } from '../utils/Cookies';
 
 function Login() {
   const [email, setEmail] = useState();
@@ -11,7 +12,7 @@ function Login() {
       password: password,
     })
     .then((result)=>{
-      console.log(result.data);
+      createCookie('token', result.data, 1);
     }).catch(err=>{
       console.log(err);
     })

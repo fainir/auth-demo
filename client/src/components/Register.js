@@ -5,6 +5,7 @@ function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [userName, setUserName] = useState();
+ 
   const register = () =>{
     axios.post('http://localhost:3001/users/user', {
       email: email,
